@@ -1,12 +1,12 @@
 # Project status
 
 > **Mode: core Runtime development is explicitly reopened by the user.
-> `GDA-CORE-001` is complete at `1727a26`; `GDA-CORE-002` is complete locally;
-> `GDA-CORE-003` is the exact next item.
-> The Full Cycle
-> Runtime baseline remains frozen at
-> `324ff2fb5911e332ddb5c5f90eb41296e8faf7a9`; Full Cycle consumer work remains
-> paused and no Demo item is active.**
+> `GDA-CORE-001` and `GDA-CORE-002` are merged through PR #230;
+> `GDA-CORE-003` is the only active item. `GDA-DEMO-006` is paused at checkpoint
+> `d74201f` with its exact live-acceptance resume point retained below. The Full
+> Cycle Runtime baseline remains frozen at
+> `324ff2fb5911e332ddb5c5f90eb41296e8faf7a9`, and Full Cycle consumer work
+> remains paused.**
 > Updated: 2026-08-04.
 > This file is the single operational entry point for the next coding session.
 > It does not replace capability evidence in `docs/CAPABILITY_STATUS.md`.
@@ -40,10 +40,10 @@ center when a control exposed neither `Invoke` nor `SelectionItem`; it now
 returns fixed `NOT_INVOKABLE` with zero coordinate driver calls. Explicit
 `click(x=..., y=...)` remains unchanged.
 
-The audit also found that initial e-stop/foreground authority evidence can age
-while the server waits for stable human-idle evidence or native dangerous-click
-confirmation. That separate final-dispatch revalidation hardening is recorded
-as proposed `GDA-CORE-002`; it is not mixed into this single-purpose change.
+The audit also found that initial e-stop/foreground authority evidence could age
+while the server waited for stable human-idle evidence or native dangerous-click
+confirmation. `GDA-CORE-002` closed that gap with a final non-waiting authority
+recheck before native dispatch. Both audit slices are merged through PR #230.
 
 This scope change does not alter Full Cycle state. Lane A manifest/export v1,
 the consumer fixture, and the Runtime freeze remain complete. Lane B remains
@@ -63,7 +63,7 @@ exact resume point is that external review; no rich capture work starts here.
 | Providers | OpenAI and Claude bounded paths |
 | Safety | Sole Runner/MCP dispatch, grounding, policy, approval, budgets, audit, mandatory re-observation |
 | Recovery | Conservative recovery; uncertain side effects are never replayed |
-| Offline baseline | `1592 passed, 8 skipped` in the 2026-08-04 `GDA-CORE-002` closure revalidation |
+| Offline baseline | `1640 passed, 8 skipped` in the 2026-08-04 consolidated Demo/Core branch revalidation |
 | Worktree at start | Clean |
 | Frozen commit | `324ff2fb5911e332ddb5c5f90eb41296e8faf7a9`, reachable from local `main` |
 
@@ -81,6 +81,9 @@ complete locally after separate issue-by-issue sessions. It did not displace
 the Full Cycle resume point, and `GDA-FC-004` subsequently closed the Runtime
 freeze. On 2026-08-03 the user explicitly reopened only `GDA-DEMO-004` for
 operator-selectable action pacing and more visible mouse/keyboard activity.
+The user then reopened `GDA-DEMO-006` for a model-driven bounded Demo. Its
+offline implementation is preserved at checkpoint `d74201f`, but repository
+consolidation pauses its live acceptance while core Runtime work is active.
 
 Continue to exclude:
 
@@ -90,8 +93,8 @@ Continue to exclude:
 - additional desktop tools or platform drivers;
 - Multi-Agent coordination;
 - automatic continual learning;
-- operator-UI work beyond the closed `GDA-DEMO-003` surfaces and the active,
-  bounded `GDA-DEMO-004` action-presentation enhancement;
+- operator-UI work beyond the closed Demo surfaces and the paused
+  `GDA-DEMO-006` live-acceptance checkpoint;
 - broad refactors unrelated to the bridge.
 
 Existing planned documents remain valid design records, but they are not active
@@ -111,13 +114,15 @@ delivery work.
 | `GDA-DEMO-003` | Complete locally | Operator HUD visual hierarchy, step status, safe lock interaction, and live reliability | [Demo evidence](docs/OPERATOR_HUD_DEMO_EVIDENCE_2026-08-03.md); [100%/125% DPI evidence](docs/OPERATOR_HUD_DPI_EVIDENCE_2026-08-03.md); [physical Alt+Tab evidence](docs/OPERATOR_HUD_KEYBOARD_EVIDENCE_2026-08-03.md) |
 | `GDA-DEMO-004` | Complete locally | Operator-selectable Demo action pacing plus visible mouse and content-free keyboard feedback | [Native probe and retained Demo evidence](docs/DEMO_ACTION_PRESENTATION_EVIDENCE_2026-08-03.md) |
 | `GDA-DEMO-005` | Proposed; not active | Cooperative desktop authority handoff, explicit pause/re-observe/resume, and complete Decision Card consequences | Await a separate control-lifecycle contract; must never use `BlockInput` or make physical input unavailable |
-| `GDA-CORE-001` | Complete; merged locally | Make a ref without a supported accessibility action fail with `NOT_INVOKABLE`, never a coordinate click | Commit `1727a26`; `tests/test_core.py` proves zero coordinate calls; complete gate: `1578 passed, 8 skipped`, Ruff, mypy, docs consistency, and diff check passed on 2026-08-04 |
-| `GDA-CORE-002` | Complete locally | Revalidate e-stop and foreground authority at the final MCP-to-driver action boundary | Six-action e-stop and five-action foreground-drift zero-dispatch tests plus confirmation/activation boundary tests; complete gate: `1592 passed, 8 skipped`, Ruff, mypy, docs consistency, and diff check passed on 2026-08-04 |
-| `GDA-CORE-003` | Next | Preserve post-dispatch MCP cancellation certainty through the Runner | Catch the MCP bridge's result-carrying cancellation before generic cancellation, durably record `UNKNOWN_OUTCOME`, never replay, and retain task cancellation after safe persistence |
+| `GDA-DEMO-006` | Paused; implemented offline; live agentic acceptance pending | Real public Microsoft Support-to-disposable-Word Demo with model-authored grounded brief, bounded known-not-dispatched correction, project permission mode, durable verification, startup Presence Halo, and explicit operator-handoff resolution | Checkpoint `d74201f`; [model-driven Demo contract and diagnostic evidence](docs/MODEL_DRIVEN_DEMO.md); exact resume is one fresh `gpt-5.6-terra` live run described below |
+| `GDA-CORE-001` | Complete; merged | Make a ref without a supported accessibility action fail with `NOT_INVOKABLE`, never a coordinate click | Commit `1727a26`, merged through PR #230; `tests/test_core.py` proves zero coordinate calls; complete gate: `1578 passed, 8 skipped`, Ruff, mypy, docs consistency, and diff check passed on 2026-08-04 |
+| `GDA-CORE-002` | Complete; merged | Revalidate e-stop and foreground authority at the final MCP-to-driver action boundary | Commit `aa7d5a7`, merged through PR #230 as `d52ffb2`; six-action e-stop and five-action foreground-drift zero-dispatch tests plus confirmation/activation boundary tests; complete gate: `1592 passed, 8 skipped`, Ruff, mypy, docs consistency, and diff check passed on 2026-08-04 |
+| `GDA-CORE-003` | Active | Preserve post-dispatch MCP cancellation certainty through the Runner | Catch the MCP bridge's result-carrying cancellation before generic cancellation, durably record `UNKNOWN_OUTCOME`, never replay, and retain task cancellation after safe persistence |
 
-No `GDA-HUD-*` or Demo issue is active. The historical Full Cycle freeze remains
-the handoff baseline; it no longer freezes the separately reopened core Runtime
-scope above.
+Only `GDA-CORE-003` is active. `GDA-DEMO-006` is paused at its exact resume
+point, and no `GDA-HUD-*` item is active. The historical Full Cycle freeze
+remains the handoff baseline; it no longer freezes the separately reopened core
+Runtime scope above.
 
 ## Defect found by composing the HUD surfaces (2026-08-01)
 
@@ -365,8 +370,27 @@ the generation must remain invalidated, and recovery must never replay the
 call. Add an end-to-end fake bridge/Runner regression and update the owning
 continuation contract before running the complete gate.
 
-`GDA-DEMO-004` is complete locally. Do not infer that closing the Demo resumes
-Full Cycle automatically. The next work remains the core Runtime item above.
+## Paused resume point: `GDA-DEMO-006`
+
+Checkpoint `d74201f` preserves the offline implementation. Keep
+`CrossAppDemoProvider` as the deterministic E1 regression baseline. The live
+path uses the real public Microsoft Support co-authoring page and a disposable
+Word document; the configured provider chooses observations and actions and
+authors a two-to-four-bullet source brief. Host constraints restrict fixtures,
+semantic refs, reviewed inputs, grounding, budgets, post-action observation,
+and durable verification; they do not substitute fixed Host prose. Model prose
+and tool choice remain untrusted data, never authority.
+
+Nine 2026-08-03 live diagnostics failed and are not evidence. The exact resume
+action is one fresh `gpt-5.6-terra` run in default `agentic_actions` mode using
+fresh public-page and Word observations. It must author a non-prewritten brief,
+durably verify the complete saved brief, and resolve exact fixture cleanup. Do
+not reuse any prior observation, approval, or generated content.
+
+`agentic_actions` skips per-action cards while retaining MCP `safe_local`,
+human-input yielding, E-stop, audit, grounding, budgets, mandatory
+post-observation, and unknown-outcome no-replay. This Demo item is paused and
+must not displace `GDA-CORE-003`.
 
 The user proposed `GDA-DEMO-005` after observing a known pre-dispatch gate
 rejection. If explicitly resumed, implement a cooperative lease rather than a
@@ -384,9 +408,10 @@ preserved as work in progress; do not continue, delete, or publish them until
 the user explicitly resumes Full Cycle. Lane B remains `FC-BRIDGE-003` pending
 its separate consent, security, and privacy review.
 
-The final Demo-closure gate passed on 2026-08-03: `1566 passed, 8 skipped`,
-Ruff passed, mypy reported no issues in 118 source files, documentation
-consistency reported 13 reviewed tools, and `git diff --check` passed.
+The Demo checkpoint gate passed on 2026-08-03: `1625 passed, 8 skipped`, Ruff
+passed, mypy reported no issues in 121 source files, documentation consistency
+reported 13 reviewed tools, and `git diff --check` passed. This is offline
+evidence only and does not complete the paused live acceptance.
 
 ## Definition of closed
 
@@ -449,6 +474,8 @@ be run on an active or sensitive desktop without an explicit evidence plan.
 | 2026-08-01 | Durable evidence must name a commit reachable from a branch. Pre-merge candidate `45bee82` was replaced by its squash merge `8ace897`; the earlier preflight result is retained, its unreachable identity is not. |
 | 2026-08-02 | Lane B is explicitly deferred from the Runtime freeze to the Full Cycle project's separate `FC-BRIDGE-003` consent, security, and privacy review; it remains disabled by default. |
 | 2026-08-02 | `GDA-FC-004` completed locally at branch-reachable Runtime commit `324ff2fb5911e332ddb5c5f90eb41296e8faf7a9`; clean release preflight and the matching consumer freeze record passed without changing Lane A contracts or fixture provenance. |
+| 2026-08-03 | The model-driven Demo defaults to project-wide Host `agentic_actions` with MCP `safe_local`: reviewed actions no longer require per-action approval, while safety baselines, grounding, budgets, human-input yielding, E-stop, audit, post-action observation, and unknown-outcome no-replay remain mandatory. |
 | 2026-08-03 | The user explicitly reopened core Runtime development without reopening Demo or Full Cycle consumer work. Core changes must preserve the frozen Full Cycle baseline, completed Lane A state, disabled/deferred Lane B boundary, and external `FC-BRIDGE-003` resume point. |
 | 2026-08-04 | `GDA-CORE-001` removed the implementation's forbidden ref-to-coordinate fallback and restored alignment with accepted ADR-002; explicit coordinate clicks remain a separate caller-authorized path. |
 | 2026-08-04 | `GDA-CORE-002` added a final non-waiting e-stop and foreground authority revalidation before every MCP native action dispatch while preserving the intentional `activate_window` foreground exception. |
+| 2026-08-04 | Repository consolidation pauses `GDA-DEMO-006` at checkpoint `d74201f` and keeps `GDA-CORE-003` as the only active item; the Demo's exact fresh live-run resume point and both Full Cycle lane boundaries remain preserved here. |
